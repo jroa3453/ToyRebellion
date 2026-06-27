@@ -15,7 +15,10 @@ public class BaseHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
         if (healthBar != null)
+        {
             healthBar.maxValue = maxHealth;
+            healthBar.value = currentHealth;
+        }
     }
 
     public void TakeDamage(float amount)
