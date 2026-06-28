@@ -15,6 +15,7 @@ public class MainMenuManager : MonoBehaviour
     public Button shopButton;
     public Button settingsButton;
     public Button achievementsButton;
+    public Button Quit;
 
     [Header("Scene Names")]
     public string defaultScene = "Bedroom"; // fallback if no level saved yet
@@ -44,15 +45,19 @@ public class MainMenuManager : MonoBehaviour
             starsText.text = PlayerPrefs.GetInt("Stars", 0).ToString();
     }
 
-    void OnPlay()
+    public void OnPlay()
     {
-        string lastLevel = PlayerPrefs.GetString("LastPlayedScene", defaultScene);
-        SceneManager.LoadScene(lastLevel);
+        SceneManager.LoadScene("LevelSelect");
     }
 
-    void ComingSoon(string buttonName)
+    public void ComingSoon(string buttonName)
     {
         Debug.Log($"{buttonName} — coming soon!");
         // Swap in a popup or toast here later
+    }
+
+    public void OnQuit()
+    {
+        Application.Quit();
     }
 }

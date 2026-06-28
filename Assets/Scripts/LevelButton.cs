@@ -13,4 +13,9 @@ public class LevelButton : MonoBehaviour
         PlayerPrefs.Save();
         SceneManager.LoadScene(sceneName);
     }
+
+    public void GoToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
