@@ -16,6 +16,7 @@ public class WinLoseManager : MonoBehaviour
     public Button mainMenuButton;
     public Button retryButton;
 
+
     [Header("Result Config")]
     public bool isWinScreen = true;          // true = Win, false = Lose
     public int batteryReward = 10;           // awarded on win
@@ -37,7 +38,7 @@ public class WinLoseManager : MonoBehaviour
         if (isWinScreen)
         {
             if (resultText)  resultText.text  = "Victory!";
-            if (rewardText)  rewardText.text  = $"+{batteryReward}   +{starReward}";
+            if (rewardText)  rewardText.text  = $"+{batteryReward} Batteries\n+{starReward} Star";
 
             // Grant rewards
             int currentBatteries = PlayerPrefs.GetInt("Batteries", 0);
@@ -49,7 +50,7 @@ public class WinLoseManager : MonoBehaviour
         else
         {
             if (resultText) resultText.text = "Defeated!";
-            if (rewardText) rewardText.text = "Better luck next time...";
+            if (rewardText) rewardText.text = $"+{batteryReward} Batteries\n+{starReward} Star";
         }
     }
 

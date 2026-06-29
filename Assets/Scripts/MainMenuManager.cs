@@ -16,7 +16,7 @@ public class MainMenuManager : MonoBehaviour
     public Button settingsButton;
     public Button achievementsButton;
     public Button Quit;
-
+    
     [Header("Scene Names")]
     public string defaultScene = "Bedroom"; // fallback if no level saved yet
 
@@ -29,6 +29,7 @@ public class MainMenuManager : MonoBehaviour
         shopButton.onClick.AddListener(() => ComingSoon("Shop"));
         settingsButton.onClick.AddListener(() => ComingSoon("Settings"));
         achievementsButton.onClick.AddListener(() => ComingSoon("Achievements"));
+       
     }
 
     void OnEnable()
