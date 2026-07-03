@@ -37,11 +37,14 @@ public class BaseHealth : MonoBehaviour
     void GameOver()
     {
         if (isPlayerBase)
+        {
             Debug.Log("GAME OVER - Player lost!");
+            WinLoseManager.TriggerResult(false);
+        }
         else
+        {
             Debug.Log("VICTORY - Player won!");
-
-        // We'll add proper game over screen later
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            WinLoseManager.TriggerResult(true);
+        }
     }
 }

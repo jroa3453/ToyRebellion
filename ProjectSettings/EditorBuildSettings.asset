@@ -7,19 +7,19 @@ EditorBuildSettings:
   m_Scenes:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
-    guid: 8bc2a424e36c8bc4dad27d80062c1647
+    guid: 8395cf22fff2c4b4781d384205bbbd18
   - enabled: 1
     path: Assets/Scenes/Bedroom.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/WinScreen.unity
-    guid: 431aece31218f1c40a3dc0e61e4a13e5
-  - enabled: 1
-    path: Assets/Scenes/LosesScreen.unity
+    path: Assets/Scenes/LoseScreen.unity
     guid: 4246d4d68220f524ead3013e18be3b00
   - enabled: 1
     path: Assets/Scenes/LevelSelect.unity
     guid: 47129be35dd586949a79d4a2979a4cbd
+  - enabled: 1
+    path: Assets/Scenes/WinScreen.unity
+    guid: ec052c6519d679545bb8ed0b8593ef6c
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

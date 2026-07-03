@@ -10,11 +10,12 @@ public class Unit : MonoBehaviour
     public bool isPlayerUnit;
 
     [Header("Detection")]
-    public float attackRange = 1.2f;
+    public float attackRange = 1f;
 
     private float attackCooldown;
     private bool initialized = false;
     private Unit currentTarget;
+    private BaseHealth currentBase;
 
     public void Init(bool isPlayer)
     {
@@ -27,17 +28,30 @@ public class Unit : MonoBehaviour
         if (!initialized) return;
 
         currentTarget = FindNearestEnemy();
+        currentBase = FindNearestBase();
 
         if (currentTarget != null)
         {
+            // Fight enemy unit
             if (attackCooldown <= 0)
             {
                 currentTarget.TakeDamage(attackDamage);
                 attackCooldown = 1f / attackRate;
             }
         }
+        else if (currentBase != null)
+        {
+            // Attack base
+            if (attackCooldown <= 0)
+            {
+                currentBase.TakeDamage(attackDamage);
+                attackCooldown = 1f / attackRate;
+                Debug.Log("Attacking base!");
+            }
+        }
         else
         {
+            // Move forward
             float direction = isPlayerUnit ? 1f : -1f;
             transform.position += new Vector3(0, direction * moveSpeed * Time.deltaTime, 0);
         }
@@ -67,36 +81,18 @@ public class Unit : MonoBehaviour
         return closest;
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        Debug.Log(gameObject.name + " trigger entered: " + other.gameObject.name);
-        string baseTag = isPlayerUnit ? "EnemyBase" : "PlayerBase";
-        if (other.CompareTag(baseTag))
-        {
-            Debug.Log("Base trigger hit!");
-            InvokeRepeating("AttackBase", 0f, 1f / attackRate);
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        string baseTag = isPlayerUnit ? "EnemyBase" : "PlayerBase";
-        if (other.CompareTag(baseTag))
-            CancelInvoke("AttackBase");
-    }
-
-    void AttackBase()
+    BaseHealth FindNearestBase()
     {
         string baseTag = isPlayerUnit ? "EnemyBase" : "PlayerBase";
         GameObject baseObj = GameObject.FindGameObjectWithTag(baseTag);
 
-        if (baseObj != null)
-        {
-            BaseHealth bh = baseObj.GetComponent<BaseHealth>();
-            Debug.Log("BaseHealth found: " + (bh != null ? "YES" : "NO"));
-            if (bh != null)
-                bh.TakeDamage(attackDamage);
-        }
+        if (baseObj == null) return null;
+
+        float dist = Vector2.Distance(transform.position, baseObj.transform.position);
+        if (dist < attackRange * 1.2f)
+            return baseObj.GetComponent<BaseHealth>();
+
+        return null;
     }
 
     public void TakeDamage(float amount)
