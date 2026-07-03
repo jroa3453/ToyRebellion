@@ -46,5 +46,7 @@ public class BaseHealth : MonoBehaviour
             Debug.Log("VICTORY - Player won!");
             WinLoseManager.TriggerResult(true);
         }
+        // We'll add proper game over screen later
+        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }
