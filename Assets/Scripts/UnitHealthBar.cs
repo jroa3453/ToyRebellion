@@ -7,6 +7,12 @@ public class UnitHealthBar : MonoBehaviour
     public float maxHealth = 15f;
     public UnityEngine.UI.Slider healthBar;
 
+    void Start()
+    {
+        if (healthBar != null)
+        healthBar.gameObject.SetActive(false);
+    }
+
     public void SetMaxHealth(float max)
     {
         maxHealth = max;
@@ -19,7 +25,7 @@ public class UnitHealthBar : MonoBehaviour
 
         if (healthBar != null)
         {
-            healthBar.maxValue = maxHealth;
+            healthBar.gameObject.SetActive(true);
             healthBar.value = currentHealth;
         }
     }

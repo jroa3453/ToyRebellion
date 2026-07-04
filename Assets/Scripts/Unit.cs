@@ -17,10 +17,19 @@ public class Unit : MonoBehaviour
     private Unit currentTarget;
     private BaseHealth currentBase;
 
+    private UnitHealthBar unitHealthBar;
+
     public void Init(bool isPlayer)
     {
         isPlayerUnit = isPlayer;
         initialized = true;
+
+        unitHealthBar = GetComponent<UnitHealthBar>(); 
+        if (unitHealthBar != null)
+        {
+            unitHealthBar.SetMaxHealth(health);
+            unitHealthBar.SetHealth(health);
+        }
     }
 
     void Update()
@@ -53,13 +62,12 @@ public class Unit : MonoBehaviour
         {
             // Move forward
             float direction = isPlayerUnit ? 1f : -1f;
-            transform.position += new Vector3( direction * moveSpeed * Time.deltaTime, 0, 0);
+            transform.position += new Vector3(direction * moveSpeed * Time.deltaTime, 0, 0);
         }
 
         if (attackCooldown > 0)
             attackCooldown -= Time.deltaTime;
     }
-
     Unit FindNearestEnemy()
     {
         string enemyTag = isPlayerUnit ? "EnemyUnit" : "PlayerUnit";
@@ -77,7 +85,6 @@ public class Unit : MonoBehaviour
                 closest = enemy.GetComponent<Unit>();
             }
         }
-
         return closest;
     }
 
@@ -98,6 +105,10 @@ public class Unit : MonoBehaviour
     public void TakeDamage(float amount)
     {
         health -= amount;
+
+        if (unitHealthBar != null)
+            unitHealthBar.SetHealth(health);
+        
         if (health <= 0)
             Destroy(gameObject);
     }
