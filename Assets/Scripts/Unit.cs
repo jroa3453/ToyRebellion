@@ -53,7 +53,7 @@ public class Unit : MonoBehaviour
         {
             // Move forward
             float direction = isPlayerUnit ? 1f : -1f;
-            transform.position += new Vector3(0, direction * moveSpeed * Time.deltaTime, 0);
+            transform.position += new Vector3( direction * moveSpeed * Time.deltaTime, 0, 0);
         }
 
         if (attackCooldown > 0)
