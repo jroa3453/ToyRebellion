@@ -45,6 +45,12 @@ public class WinLoseManager : MonoBehaviour
             // Grant rewards
             int currentBatteries = PlayerPrefs.GetInt("Batteries", 0);
             int currentStars     = PlayerPrefs.GetInt("Stars", 0);
+
+            //LevelProgress
+            int currentLevelIndex = PlayerPrefs.GetInt("LastPlayedLevelIndex", 0);
+            int currentLevelNumber = currentLevelIndex + 1; // LevelProgress is 1-based
+            LevelProgress.UnlockLevel(currentLevelNumber + 1);
+
             PlayerPrefs.SetInt("Batteries", currentBatteries + batteryReward);
             PlayerPrefs.SetInt("Stars",     currentStars     + starReward);
             PlayerPrefs.Save();
