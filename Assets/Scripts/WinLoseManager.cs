@@ -15,6 +15,7 @@ public class WinLoseManager : MonoBehaviour
     public TextMeshProUGUI rewardText;       // e.g. "+10 Batteries"
     public Button mainMenuButton;
     public Button retryButton;
+    public Button selectLevelButton;
 
 
     [Header("Result Config")]
@@ -31,6 +32,7 @@ public class WinLoseManager : MonoBehaviour
         SetupScreen();
         mainMenuButton.onClick.AddListener(() => SceneManager.LoadScene(mainMenuScene));
         retryButton.onClick.AddListener(()    => SceneManager.LoadScene(retryScene));
+        selectLevelButton.onClick.AddListener(() => SceneManager.LoadScene("LevelSelect"));
     }
 
     void SetupScreen()

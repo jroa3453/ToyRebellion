@@ -28,7 +28,6 @@ public class Unit : MonoBehaviour
         if (unitHealthBar != null)
         {
             unitHealthBar.SetMaxHealth(health);
-            unitHealthBar.SetHealth(health);
         }
     }
 

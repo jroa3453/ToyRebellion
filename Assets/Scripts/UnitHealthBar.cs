@@ -13,10 +13,13 @@ public class UnitHealthBar : MonoBehaviour
         healthBar.gameObject.SetActive(false);
     }
 
-    public void SetMaxHealth(float max)
+   public void SetMaxHealth(float max)
     {
         maxHealth = max;
         currentHealth = max;
+        
+        if (healthBar != null)
+            healthBar.maxValue = max;
     }
 
     public void SetHealth(float health)
