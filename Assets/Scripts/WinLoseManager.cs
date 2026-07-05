@@ -16,6 +16,7 @@ public class WinLoseManager : MonoBehaviour
     public Button mainMenuButton;
     public Button retryButton;
     public Button selectLevelButton;
+    public Button NextLevelButton;
 
 
     [Header("Result Config")]
@@ -33,6 +34,8 @@ public class WinLoseManager : MonoBehaviour
         mainMenuButton.onClick.AddListener(() => SceneManager.LoadScene(mainMenuScene));
         retryButton.onClick.AddListener(()    => SceneManager.LoadScene(retryScene));
         selectLevelButton.onClick.AddListener(() => SceneManager.LoadScene("LevelSelect"));
+        NextLevelButton.onClick.AddListener(() => SceneManager.LoadScene(LevelProgress.GetSceneName
+        (PlayerPrefs.GetInt("LastPlayedLevelIndex", 0))));
     }
 
     void SetupScreen()
@@ -50,6 +53,7 @@ public class WinLoseManager : MonoBehaviour
             int currentLevelIndex = PlayerPrefs.GetInt("LastPlayedLevelIndex", 0);
             int currentLevelNumber = currentLevelIndex + 1; // LevelProgress is 1-based
             LevelProgress.UnlockLevel(currentLevelNumber + 1);
+            LevelProgress.GetSceneName(currentLevelIndex);
 
             PlayerPrefs.SetInt("Batteries", currentBatteries + batteryReward);
             PlayerPrefs.SetInt("Stars",     currentStars     + starReward);
