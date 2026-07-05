@@ -29,7 +29,7 @@ public class BatteryManager : MonoBehaviour
 
         // Update UI
         if (batteryText != null)
-            batteryText.text = "⚡ " + Mathf.FloorToInt(currentBattery).ToString();
+            batteryText.text = " Battery: " + Mathf.FloorToInt(currentBattery).ToString();
     }
 
     public bool SpendBattery(float amount)
