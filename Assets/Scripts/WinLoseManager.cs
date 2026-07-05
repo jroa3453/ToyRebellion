@@ -34,8 +34,19 @@ public class WinLoseManager : MonoBehaviour
         mainMenuButton.onClick.AddListener(() => SceneManager.LoadScene(mainMenuScene));
         retryButton.onClick.AddListener(()    => SceneManager.LoadScene(retryScene));
         selectLevelButton.onClick.AddListener(() => SceneManager.LoadScene("LevelSelect"));
-        NextLevelButton.onClick.AddListener(() => SceneManager.LoadScene(LevelProgress.GetSceneName
-        (PlayerPrefs.GetInt("LastPlayedLevelIndex", 0))));
+        NextLevelButton.onClick.AddListener(() =>
+        {
+            int currentLevelIndex = PlayerPrefs.GetInt("LastPlayedLevelIndex", 0);
+            int nextLevelIndex = (currentLevelIndex + 1) % 10;
+            string nextScene = LevelProgress.GetSceneName(currentLevelIndex);
+
+            PlayerPrefs.SetInt("LastPlayedLevelIndex", nextLevelIndex);
+            PlayerPrefs.Save();
+
+            Debug.Log($"currentLevelIndex: {currentLevelIndex}, nextScene: {nextScene}");
+
+            SceneManager.LoadScene(nextScene);
+        });
     }
 
     void SetupScreen()
