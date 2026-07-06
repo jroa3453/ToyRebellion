@@ -1229,7 +1229,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.23270428, g: 0.23270428, b: 0, a: 1}
+  m_BackGroundColor: {r: 0.5803922, g: 0, b: 0.8274511, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2593,7 +2593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: addaa706f67544e448852c5d650e13cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseHealth
-  maxHealth: 10
+  maxHealth: 1000
   currentHealth: 0
   isPlayerBase: 1
   healthBar: {fileID: 311694439}

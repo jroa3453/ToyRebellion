@@ -23,6 +23,30 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Kitchen.unity
     guid: ef8dc815deae16c47b06bbad35c9160a
+  - enabled: 1
+    path: Assets/Scenes/Bathroom.unity
+    guid: 37cfa39e8d1986a4f8d3b0dc5149f239
+  - enabled: 1
+    path: Assets/Scenes/Garage.unity
+    guid: 726d6a46b40f30a429943819e82601a2
+  - enabled: 1
+    path: Assets/Scenes/Hallway.unity
+    guid: 1590cb5a05e9ec54fa2a7065eb22f3f9
+  - enabled: 1
+    path: Assets/Scenes/Basement.unity
+    guid: 07f4bd4e14946c242be3fc3af2367eb3
+  - enabled: 1
+    path: Assets/Scenes/Backyard.unity
+    guid: d13ca62e5fc6e934daf812bfc43be0a4
+  - enabled: 1
+    path: Assets/Scenes/Attic.unity
+    guid: fcafbaebc6653104884f72e5a37b6a09
+  - enabled: 1
+    path: Assets/Scenes/Rooftop.unity
+    guid: 679b0308ca2d6bc409d6ac595cde292f
+  - enabled: 1
+    path: Assets/Scenes/Den.unity
+    guid: f510f559cee1688438b63c770ad9800a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -938,6 +938,8 @@ MonoBehaviour:
   rewardText: {fileID: 450961377}
   mainMenuButton: {fileID: 1019939696}
   retryButton: {fileID: 762207511}
+  selectLevelButton: {fileID: 198756781}
+  NextLevelButton: {fileID: 0}
   isWinScreen: 0
   batteryReward: 2
   starReward: 0

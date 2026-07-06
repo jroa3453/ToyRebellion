@@ -34,7 +34,10 @@ public class WinLoseManager : MonoBehaviour
         mainMenuButton.onClick.AddListener(() => SceneManager.LoadScene(mainMenuScene));
         retryButton.onClick.AddListener(()    => SceneManager.LoadScene(retryScene));
         selectLevelButton.onClick.AddListener(() => SceneManager.LoadScene("LevelSelect"));
-        NextLevelButton.onClick.AddListener(() =>
+
+        if (NextLevelButton != null)
+        {
+            NextLevelButton.onClick.AddListener(() =>
         {
             int currentLevelIndex = PlayerPrefs.GetInt("LastPlayedLevelIndex", 0);
             int nextLevelIndex = (currentLevelIndex + 1) % 10;
@@ -75,6 +78,7 @@ public class WinLoseManager : MonoBehaviour
             if (resultText) resultText.text = "Defeated!";
             if (rewardText) rewardText.text = $"+{batteryReward} Batteries\n+{starReward} Star";
         }
+    }
     }
 
     // ---------------------------------------------------------------
