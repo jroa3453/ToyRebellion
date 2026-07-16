@@ -1,7 +1,17 @@
 using UnityEngine;
+using TMPro;
+using System.Collections;
 
 public class UnitSpawner : MonoBehaviour
 {
+    public int currentWave = 1;
+    public bool Level1 = false;
+    public bool Level2 = false;
+    public bool wave1Spawned = false;
+    public bool wave2Spawned = false;
+    public bool finalWaveSpawned = false;
+    public TMP_Text waveClearedText;
+
     [Header("Spawn Points")]
     public Transform playerSpawnPoint;
     public Transform enemySpawnPoint;
@@ -16,20 +26,92 @@ public class UnitSpawner : MonoBehaviour
     public float actionFigCost = 25f;
     public float robotToyCost = 40f;
 
-    [Header("Enemy AI")]
-    public float enemySpawnInterval = 3f;
-    private float enemySpawnTimer;
 
     void Update()
     {
-        // Simple enemy AI — spawns random units over time
-        enemySpawnTimer -= Time.deltaTime;
-        if (enemySpawnTimer <= 0)
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemyUnit");
+        if(enemies.Length == 0 && Level1 == false && wave1Spawned == true)
         {
-            SpawnEnemyUnit();
-            enemySpawnTimer = enemySpawnInterval;
+            Debug.Log("Wave 2 starting!");
+            StartCoroutine(SpawnWave2());
+            Level1 = true;
+        }
+        if (enemies.Length == 0 && Level1 == true && Level2 == false && wave2Spawned == true)
+        {
+            Debug.Log("Final Wave starting!");
+            StartCoroutine(SpawnFinalWave());
+            Level2 = true;
         }
     }
+
+    void Start()
+    {
+        StartCoroutine(LevelIntro());
+    }
+
+    IEnumerator LevelIntro()
+{
+     yield return new WaitForSeconds(2f);
+    waveClearedText.gameObject.SetActive(true);
+    waveClearedText.text = "Level 1";
+    yield return new WaitForSeconds(4f);
+    waveClearedText.gameObject.SetActive(false);
+    yield return StartCoroutine(SpawnEnemy());
+}
+
+    IEnumerator SpawnEnemy()
+{
+    yield return new WaitForSeconds(3f);
+    waveClearedText.gameObject.SetActive(true);
+    waveClearedText.text = "Wave 1";
+    yield return new WaitForSeconds(4f);
+    waveClearedText.gameObject.SetActive(false);
+    SpawnEnemyUnit();
+    yield return new WaitForSeconds(7f);
+    SpawnEnemyUnit();
+    yield return new WaitForSeconds(10f);
+    SpawnEnemyUnit();
+    SpawnEnemyUnit();
+    SpawnEnemyUnit();
+    wave1Spawned = true;
+}
+
+    IEnumerator SpawnWave2()
+{
+    waveClearedText.gameObject.SetActive(true);
+    waveClearedText.text = "Wave 2";
+    yield return new WaitForSeconds(4f);
+    waveClearedText.gameObject.SetActive(false);
+    SpawnEnemyUnit();
+    SpawnEnemyUnit();
+    SpawnEnemyUnit(); 
+    yield return new WaitForSeconds(5f);
+    SpawnEnemyUnit();
+    SpawnEnemyUnit(); 
+    SpawnEnemyUnit();
+    SpawnEnemyUnit();
+    wave2Spawned = true;
+}
+
+    IEnumerator SpawnFinalWave()
+{
+    waveClearedText.gameObject.SetActive(true);
+    waveClearedText.text = "Final Wave";
+    yield return new WaitForSeconds(4f);
+    waveClearedText.gameObject.SetActive(false);
+    SpawnEnemyUnit();
+    SpawnEnemyUnit();
+    SpawnEnemyUnit();
+    SpawnEnemyUnit(); 
+    yield return new WaitForSeconds(5f);
+    SpawnEnemyUnit();
+    SpawnEnemyUnit(); 
+    SpawnEnemyUnit();
+    SpawnEnemyUnit();
+    SpawnEnemyUnit();
+    SpawnEnemyUnit();
+    finalWaveSpawned = true;
+}
 
     // Called by UI buttons
     public void SpawnPlushie()
@@ -68,15 +150,15 @@ public class UnitSpawner : MonoBehaviour
     void SpawnUnit(GameObject prefab, Vector3 position, bool isPlayer)
     {
         if (prefab == null) return;
-        
+
         GameObject unit = Instantiate(prefab, position, Quaternion.identity);
-        
+
         // Set tag on root AND all children
         string tag = isPlayer ? "PlayerUnit" : "EnemyUnit";
         unit.tag = tag;
         foreach (Transform child in unit.transform)
             child.tag = tag;
-        
+
         Unit unitScript = unit.GetComponent<Unit>();
         if (unitScript != null)
             unitScript.Init(isPlayer);
