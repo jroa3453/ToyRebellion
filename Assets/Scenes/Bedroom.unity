@@ -2529,6 +2529,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UnitSpawner
   currentWave: 1
   Level1: 0
+  Level2: 0
+  wave1Spawned: 0
+  wave2Spawned: 0
+  finalWaveSpawned: 0
   waveClearedText: {fileID: 490008728}
   playerSpawnPoint: {fileID: 1043018129}
   enemySpawnPoint: {fileID: 1539507648}

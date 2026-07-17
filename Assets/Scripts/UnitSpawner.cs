@@ -4,6 +4,8 @@ using System.Collections;
 
 public class UnitSpawner : MonoBehaviour
 {
+    [Header("Difficulty")]
+    public float enemyDifficultyMultiplier = 1f;
     public int currentWave = 1;
     public bool Level1 = false;
     public bool Level2 = false;
@@ -161,7 +163,33 @@ public class UnitSpawner : MonoBehaviour
 
         Unit unitScript = unit.GetComponent<Unit>();
         if (unitScript != null)
-            unitScript.Init(isPlayer);
+        {
+            if (!isPlayer)
+            {
+                unitScript.health *= enemyDifficultyMultiplier;
+                unitScript.attackDamage *= enemyDifficultyMultiplier;
+            }
+            else
+            {
+                if (prefab == plushiePrefab)
+                {
+                    unitScript.health *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.PlushieHPLevel);
+                    unitScript.attackDamage *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.PlushieDPSLevel);
+                }
+                else if (prefab == actionFigPrefab)
+                {
+                    unitScript.health *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.ActionFigHPLevel);
+                    unitScript.attackDamage *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.ActionFigDPSLevel);
+                }
+                else if (prefab == robotToyPrefab)
+                {
+                    unitScript.health *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.RobotToyHPLevel);
+                    unitScript.attackDamage *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.RobotToyDPSLevel); 
+                }   
+            }
+             unitScript.Init(isPlayer);
+        }
+           
 
         if (!isPlayer)
         {
