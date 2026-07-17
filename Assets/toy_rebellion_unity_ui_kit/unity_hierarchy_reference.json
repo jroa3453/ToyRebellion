@@ -1,0 +1,33 @@
+{
+  "referenceResolution": [
+    1080,
+    1920
+  ],
+  "canvasScaler": "Scale With Screen Size",
+  "screen": {
+    "name": "UpgradeScreen",
+    "children": [
+      "Background",
+      {
+        "TopBar": [
+          "BackButton",
+          "TitleBanner",
+          "CurrencyBox"
+        ]
+      },
+      {
+        "ToyTabs": [
+          "PlushieTab",
+          "ActionFigureTab",
+          "RobotTab"
+        ]
+      },
+      {
+        "UpgradeList": [
+          "HealthUpgradeCard",
+          "DamageUpgradeCard"
+        ]
+      }
+    ]
+  }
+}

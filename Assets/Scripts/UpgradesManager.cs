@@ -13,4 +13,9 @@ public class UpgradesManager : MonoBehaviour
         Debug.Log("Button Clicked! Current PlushieDPSLevel: " + UpgradeManager.PlushieDPSLevel);
         UpgradeManager.PurchasePlushieDPSUpgrade();
     }
+    public void OnPLushieAttackSPDButtonClicked()
+    {
+        Debug.Log("Button Clicked! Current PlushieAttackSPDLevel: " + UpgradeManager.PlushieAttackSPDLevel);
+        UpgradeManager.PurchasePlushieAttackSPDUpgrade();
+    }
 }
