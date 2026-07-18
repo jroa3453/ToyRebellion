@@ -175,16 +175,19 @@ public class UnitSpawner : MonoBehaviour
                 {
                     unitScript.health *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.PlushieHPLevel);
                     unitScript.attackDamage *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.PlushieDPSLevel);
+                    unitScript.attackRate *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.PlushieAttackSPDLevel);
                 }
                 else if (prefab == actionFigPrefab)
                 {
                     unitScript.health *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.ActionFigHPLevel);
                     unitScript.attackDamage *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.ActionFigDPSLevel);
+                    unitScript.attackRate *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.ActionFigAttackSPDLevel);
                 }
                 else if (prefab == robotToyPrefab)
                 {
                     unitScript.health *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.RobotToyHPLevel);
                     unitScript.attackDamage *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.RobotToyDPSLevel); 
+                    unitScript.attackRate *= UpgradeManager.GetUpgradeMultiplier(UpgradeManager.RobotToyAttackSPDLevel);
                 }   
             }
              unitScript.Init(isPlayer);

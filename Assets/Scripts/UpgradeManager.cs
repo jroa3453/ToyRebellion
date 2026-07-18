@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public static class UpgradeManager
 {
+
+    
     //Plushie Stats
     public static int PlushieHPLevel
     {
@@ -63,6 +65,8 @@ public static class UpgradeManager
         get => PlayerPrefs.GetInt("Stars", 0);
         set => PlayerPrefs.SetInt("Stars", value);
     }
+    public const int MaxUpgradeLevel = 20;
+    
     //Upgrade Costs
     public static int GetUpgradeCost(int currentLevel)
     {
@@ -79,6 +83,12 @@ public static class UpgradeManager
     //Plushie Upgrades
     public static bool PurchasePlushieHPUpgrade()
     {
+        if(PlushieHPLevel >= MaxUpgradeLevel)
+            {
+                Debug.Log("Plushie HP Upgrade is already at max level.");
+                return false;
+            }
+
         int cost = GetUpgradeCost(PlushieHPLevel);
         if(Stars >= cost)
         {
@@ -93,9 +103,16 @@ public static class UpgradeManager
     }
     public static bool PurchasePlushieDPSUpgrade()
     {
+     if(PlushieDPSLevel >= MaxUpgradeLevel)
+            {
+                Debug.Log("Plushie DPS Upgrade is already at max level.");
+                return false;
+            }
+               
         int cost = GetUpgradeCost(PlushieDPSLevel);
         if(Stars >= cost)
         {
+            
             Stars -= cost;
             PlushieDPSLevel += 1;
             return true;
@@ -107,6 +124,12 @@ public static class UpgradeManager
     }
     public static bool PurchasePlushieAttackSPDUpgrade()
     {
+        if(PlushieAttackSPDLevel >= MaxUpgradeLevel)
+            {
+                Debug.Log("Plushie Attack SPD Upgrade is already at max level.");
+                return false;
+            }
+
         int cost = GetUpgradeCost(PlushieAttackSPDLevel);
         if(Stars >= cost)
         {
@@ -122,6 +145,11 @@ public static class UpgradeManager
     //ActionFigure Upgrades
     public static bool PurchaseActionFigHPUpgrade()
     {
+        if(ActionFigHPLevel >= MaxUpgradeLevel)
+            {
+                Debug.Log("Action Figure HP Upgrade is already at max level.");
+                return false;
+            }
         int cost = GetUpgradeCost(ActionFigHPLevel);
         if(Stars >= cost)
         {
@@ -136,6 +164,11 @@ public static class UpgradeManager
     }
     public static bool PurchaseActionFigDPSUpgrade()
     {
+        if(ActionFigDPSLevel >= MaxUpgradeLevel)
+            {
+                Debug.Log("Action Figure DPS Upgrade is already at max level.");
+                return false;
+            }
         int cost = GetUpgradeCost(ActionFigDPSLevel);
         if(Stars >= cost)
         {
@@ -150,6 +183,11 @@ public static class UpgradeManager
     }
     public static bool PurchaseActionFigAttackSPDUpgrade()
     {
+        if(ActionFigAttackSPDLevel >= MaxUpgradeLevel)
+            {
+                Debug.Log("Action Figure Attack SPD Upgrade is already at max level.");
+                return false;
+            }
         int cost = GetUpgradeCost(ActionFigAttackSPDLevel);
         if(Stars >= cost)
         {
@@ -165,6 +203,11 @@ public static class UpgradeManager
     //Robot Toy Upgrades
     public static bool PurchaseRobotToyHPUpgrade()
     {
+        if(RobotToyHPLevel >= MaxUpgradeLevel)
+            {
+                Debug.Log("Robot Toy HP Upgrade is already at max level.");
+                return false;
+            }
         int cost = GetUpgradeCost(RobotToyHPLevel);
         if(Stars >= cost)
         {
@@ -179,6 +222,11 @@ public static class UpgradeManager
     }
     public static bool PurchaseRobotToyDPSUpgrade()
     {
+        if(RobotToyDPSLevel >= MaxUpgradeLevel)
+            {
+                Debug.Log("Robot Toy DPS Upgrade is already at max level.");
+                return false;
+            }
         int cost = GetUpgradeCost(RobotToyDPSLevel);
         if(Stars >= cost)
         {
@@ -193,6 +241,11 @@ public static class UpgradeManager
     }
     public static bool PurchaseRobotToyAttackSPDUpgrade()
     {
+        if(RobotToyAttackSPDLevel >= MaxUpgradeLevel)
+            {
+                Debug.Log("Robot Toy Attack SPD Upgrade is already at max level.");
+                return false;
+            }
         int cost = GetUpgradeCost(RobotToyAttackSPDLevel);
         if(Stars >= cost)
         {
@@ -208,6 +261,11 @@ public static class UpgradeManager
     //Player base Upgrades
     public static bool PurchasePlayerBaseHPUpgrade()
     {
+        if(PlayerBaseHPLevel >= MaxUpgradeLevel)
+            {
+                Debug.Log("Player Base HP Upgrade is already at max level.");
+                return false;
+            }
         int cost = GetUpgradeCost(PlayerBaseHPLevel);
         if(Stars >= cost)
         {
