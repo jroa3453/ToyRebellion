@@ -5,6 +5,10 @@ using TMPro;
 public class UpgradesManager : MonoBehaviour
 {
     public UnitType selectedUnit = UnitType.Plushie;
+    public GameObject PlushiePrefab;
+    public GameObject ActionFigPrefab;
+    public GameObject RobotToyPrefab;
+    GameObject selectedPrefab = PlushiePrefab;
 
     public TMP_Text hpLevelText;
     public TMP_Text hpValueText;
@@ -54,19 +58,27 @@ public class UpgradesManager : MonoBehaviour
                 hpLevel = UpgradeManager.PlushieHPLevel;
                 dpsLevel = UpgradeManager.PlushieDPSLevel;
                 attackSPDLevel = UpgradeManager.PlushieAttackSPDLevel;
+                selectedPrefab = PlushiePrefab;
                 break;
             case UnitType.ActionFig:
                 Debug.Log("Refreshing display for Action Figure");
                  hpLevel = UpgradeManager.ActionFigHPLevel;
                 dpsLevel = UpgradeManager.ActionFigDPSLevel;
                 attackSPDLevel = UpgradeManager.ActionFigAttackSPDLevel;
+                selectedPrefab = ActionFigPrefab;
                 break;
             case UnitType.RobotToy:
                 Debug.Log("Refreshing display for Robot Toy");
                 hpLevel = UpgradeManager.RobotToyHPLevel;
                 dpsLevel = UpgradeManager.RobotToyDPSLevel;
                 attackSPDLevel = UpgradeManager.RobotToyAttackSPDLevel;
+                selectedPrefab = RobotToyPrefab;
                 break;
         }
+            hpLevelText.text = "Lv " + hpLevel;
+            hpSlider.value = (float)hpLevel / UpgradeManager.MaxUpgradeLevel;
+            Unit unitData = selectedPrefab.GetComponent<Unit>();
+            float actualHP = unitData.health * UpgradeManager.GetUpgradeMultiplier(hpLevel);
+            hpValueText.text = actualHP + " HP";
     }
 }

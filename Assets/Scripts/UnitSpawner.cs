@@ -52,69 +52,68 @@ public class UnitSpawner : MonoBehaviour
     }
 
     IEnumerator LevelIntro()
-{
-     yield return new WaitForSeconds(2f);
-    waveClearedText.gameObject.SetActive(true);
-    waveClearedText.text = "Level 1";
-    yield return new WaitForSeconds(4f);
-    waveClearedText.gameObject.SetActive(false);
-    yield return StartCoroutine(SpawnEnemy());
-}
+    {
+        yield return new WaitForSeconds(2f);
+        waveClearedText.gameObject.SetActive(true);
+        waveClearedText.text = "Level 1";
+        yield return new WaitForSeconds(4f);
+        waveClearedText.gameObject.SetActive(false);
+        yield return StartCoroutine(SpawnEnemy());
+    }
 
     IEnumerator SpawnEnemy()
-{
-    yield return new WaitForSeconds(3f);
-    waveClearedText.gameObject.SetActive(true);
-    waveClearedText.text = "Wave 1";
-    yield return new WaitForSeconds(4f);
-    waveClearedText.gameObject.SetActive(false);
-    SpawnEnemyUnit();
-    yield return new WaitForSeconds(7f);
-    SpawnEnemyUnit();
-    yield return new WaitForSeconds(10f);
-    SpawnEnemyUnit();
-    SpawnEnemyUnit();
-    SpawnEnemyUnit();
-    wave1Spawned = true;
-}
+    {
+        yield return new WaitForSeconds(3f);
+        waveClearedText.gameObject.SetActive(true);
+        waveClearedText.text = "Wave 1";
+        yield return new WaitForSeconds(4f);
+        waveClearedText.gameObject.SetActive(false);
+        SpawnEnemyUnit();
+        yield return new WaitForSeconds(7f);
+        SpawnEnemyUnit();
+        yield return new WaitForSeconds(10f);
+        SpawnEnemyUnit();
+        SpawnEnemyUnit();
+        SpawnEnemyUnit();
+        wave1Spawned = true;
+    }
 
     IEnumerator SpawnWave2()
-{
-    waveClearedText.gameObject.SetActive(true);
-    waveClearedText.text = "Wave 2";
-    yield return new WaitForSeconds(4f);
-    waveClearedText.gameObject.SetActive(false);
-    SpawnEnemyUnit();
-    SpawnEnemyUnit();
-    SpawnEnemyUnit(); 
-    yield return new WaitForSeconds(5f);
-    SpawnEnemyUnit();
-    SpawnEnemyUnit(); 
-    SpawnEnemyUnit();
-    SpawnEnemyUnit();
-    wave2Spawned = true;
-}
+    {
+        waveClearedText.gameObject.SetActive(true);
+        waveClearedText.text = "Wave 2";
+        yield return new WaitForSeconds(4f);
+        waveClearedText.gameObject.SetActive(false);
+        SpawnEnemyUnit();
+        SpawnEnemyUnit();
+        SpawnEnemyUnit(); 
+        yield return new WaitForSeconds(5f);
+        SpawnEnemyUnit();
+        SpawnEnemyUnit(); 
+        SpawnEnemyUnit();
+        SpawnEnemyUnit();
+        wave2Spawned = true;
+    }
 
     IEnumerator SpawnFinalWave()
-{
-    waveClearedText.gameObject.SetActive(true);
-    waveClearedText.text = "Final Wave";
-    yield return new WaitForSeconds(4f);
-    waveClearedText.gameObject.SetActive(false);
-    SpawnEnemyUnit();
-    SpawnEnemyUnit();
-    SpawnEnemyUnit();
-    SpawnEnemyUnit(); 
-    yield return new WaitForSeconds(5f);
-    SpawnEnemyUnit();
-    SpawnEnemyUnit(); 
-    SpawnEnemyUnit();
-    SpawnEnemyUnit();
-    SpawnEnemyUnit();
-    SpawnEnemyUnit();
-    finalWaveSpawned = true;
-}
-
+    {
+        waveClearedText.gameObject.SetActive(true);
+        waveClearedText.text = "Final Wave";
+        yield return new WaitForSeconds(4f);
+        waveClearedText.gameObject.SetActive(false);
+        SpawnEnemyUnit();
+        SpawnEnemyUnit();
+        SpawnEnemyUnit();
+        SpawnEnemyUnit(); 
+        yield return new WaitForSeconds(5f);
+        SpawnEnemyUnit();
+        SpawnEnemyUnit(); 
+        SpawnEnemyUnit();
+        SpawnEnemyUnit();
+        SpawnEnemyUnit();
+        SpawnEnemyUnit();
+        finalWaveSpawned = true;
+    }
     // Called by UI buttons
     public void SpawnPlushie()
     {
@@ -123,7 +122,6 @@ public class UnitSpawner : MonoBehaviour
         else
             Debug.Log("Not enough battery for Plushie!");
     }
-
     public void SpawnActionFig()
     {
         if (BatteryManager.Instance.SpendBattery(actionFigCost))
@@ -131,7 +129,6 @@ public class UnitSpawner : MonoBehaviour
         else
             Debug.Log("Not enough battery for Action Figure!");
     }
-
     public void SpawnRobotToy()
     {
         if (BatteryManager.Instance.SpendBattery(robotToyCost))
@@ -139,7 +136,6 @@ public class UnitSpawner : MonoBehaviour
         else
             Debug.Log("Not enough battery for Robot Toy!");
     }
-
     void SpawnEnemyUnit()
     {
         // Enemy randomly picks a unit to spawn
@@ -148,7 +144,6 @@ public class UnitSpawner : MonoBehaviour
                            rand == 1 ? actionFigPrefab : robotToyPrefab;
         SpawnUnit(prefab, enemySpawnPoint.position, false);
     }
-
     void SpawnUnit(GameObject prefab, Vector3 position, bool isPlayer)
     {
         if (prefab == null) return;
@@ -192,8 +187,6 @@ public class UnitSpawner : MonoBehaviour
             }
              unitScript.Init(isPlayer);
         }
-           
-
         if (!isPlayer)
         {
             SpriteRenderer sr = unit.GetComponent<SpriteRenderer>();
