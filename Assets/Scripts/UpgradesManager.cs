@@ -8,7 +8,7 @@ public class UpgradesManager : MonoBehaviour
     public GameObject PlushiePrefab;
     public GameObject ActionFigPrefab;
     public GameObject RobotToyPrefab;
-    GameObject selectedPrefab = PlushiePrefab;
+    GameObject selectedPrefab;
 
     public TMP_Text hpLevelText;
     public TMP_Text hpValueText;
@@ -27,19 +27,23 @@ public class UpgradesManager : MonoBehaviour
     int attackSPDLevel = 0;
 
     public void OnPLushieHPButtonClicked()
-    {
-        Debug.Log("Button Clicked! Current PlushieHPLevel: " + UpgradeManager.PlushieHPLevel);
-        UpgradeManager.PurchasePlushieHPUpgrade();
-    }
+{
+    Debug.Log("Before: PlushieHPLevel=" + UpgradeManager.PlushieHPLevel + " Stars=" + UpgradeManager.Stars);
+    bool success = UpgradeManager.PurchasePlushieHPUpgrade();
+    Debug.Log("Purchase success? " + success + " | After: PlushieHPLevel=" + UpgradeManager.PlushieHPLevel + " Stars=" + UpgradeManager.Stars);
+    RefreshDisplay();
+}
     public void OnPLushieDPSButtonClicked()
     {
         Debug.Log("Button Clicked! Current PlushieDPSLevel: " + UpgradeManager.PlushieDPSLevel);
         UpgradeManager.PurchasePlushieDPSUpgrade();
+        RefreshDisplay();
     }
     public void OnPLushieAttackSPDButtonClicked()
     {
         Debug.Log("Button Clicked! Current PlushieAttackSPDLevel: " + UpgradeManager.PlushieAttackSPDLevel);
         UpgradeManager.PurchasePlushieAttackSPDUpgrade();
+        RefreshDisplay();
     }
     public enum UnitType
     {
@@ -47,6 +51,17 @@ public class UpgradesManager : MonoBehaviour
         ActionFig,
         RobotToy
     }
+
+    void Start()
+    {
+        RefreshDisplay();
+    }
+    public void AddTestStars()
+{
+    UpgradeManager.Stars += 250;
+    Debug.Log("Stars added! Current Stars: " + UpgradeManager.Stars);
+    RefreshDisplay();
+}
 
     public void RefreshDisplay()
     {
@@ -79,6 +94,32 @@ public class UpgradesManager : MonoBehaviour
             hpSlider.value = (float)hpLevel / UpgradeManager.MaxUpgradeLevel;
             Unit unitData = selectedPrefab.GetComponent<Unit>();
             float actualHP = unitData.health * UpgradeManager.GetUpgradeMultiplier(hpLevel);
-            hpValueText.text = actualHP + " HP";
+            hpValueText.text = "<color=#FFD700>" + actualHP + "</color> HP";
+
+            dpsLevelText.text = "Lv " + dpsLevel;
+            dpsSlider.value = (float)dpsLevel / UpgradeManager.MaxUpgradeLevel;
+            float actualDPS = unitData.attackDamage * UpgradeManager.GetUpgradeMultiplier(dpsLevel);
+            dpsValueText.text = "<color=#FFD700>" + actualDPS + "</color> DPS";
+
+            attackSPDLevelText.text = "Lv " + attackSPDLevel;
+            attackSPDSlider.value = (float)attackSPDLevel / UpgradeManager.MaxUpgradeLevel;
+            float actualAttackSPD = unitData.attackRate * UpgradeManager.GetUpgradeMultiplier(attackSPDLevel);
+            attackSPDValueText.text = "<color=#FFD700>" + actualAttackSPD + "</color> SPD";
+    }
+
+    public void SelectPlushie()
+    {
+        selectedUnit = UnitType.Plushie;
+        RefreshDisplay();
+    }
+    public void SelectActionFig()
+    {
+        selectedUnit = UnitType.ActionFig;
+        RefreshDisplay();
+    }
+    public void SelectRobotToy()
+    {
+        selectedUnit = UnitType.RobotToy;
+        RefreshDisplay();
     }
 }
