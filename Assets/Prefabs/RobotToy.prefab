@@ -489,7 +489,7 @@ MonoBehaviour:
   attackRate: 1
   health: 100
   isPlayerUnit: 0
-  attackRange: 1
+  attackRange: 0.8
 --- !u!61 &1635714204254602199
 BoxCollider2D:
   m_ObjectHideFlags: 0

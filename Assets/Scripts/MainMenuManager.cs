@@ -51,6 +51,12 @@ public class MainMenuManager : MonoBehaviour
         SceneManager.LoadScene("LevelSelect");
     }
 
+    public void OnUpgradesButtonClicked()
+    {
+        Debug.Log("Upgrades button clicked, loading Upgrades scene...");
+        SceneManager.LoadScene("Upgrades");
+    }
+
     public void ComingSoon(string buttonName)
     {
         Debug.Log($"{buttonName} — coming soon!");

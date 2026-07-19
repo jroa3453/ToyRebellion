@@ -67,5 +67,5 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "Toy Rebeliion.slnx"
+    "dotnet.defaultSolution": "ToyRebellion.slnx"
 }

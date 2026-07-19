@@ -28,6 +28,10 @@ public class UpgradesManager : MonoBehaviour
     public TMP_Text attackSPDCostText;
     public TMP_Text starsText;
 
+    public GameObject plushieHighLight;
+    public GameObject actionFigHighLight;
+    public GameObject robotToyHighLight;
+
     int hpLevel = 0;
     int dpsLevel = 0;
     int attackSPDLevel = 0;
@@ -128,7 +132,64 @@ public class UpgradesManager : MonoBehaviour
             attackSPDCostText.text = UpgradeManager.GetUpgradeCost(attackSPDLevel).ToString();
             //Stars currency
             starsText.text = UpgradeManager.Stars.ToString();
+
+            plushieHighLight.SetActive(selectedUnit == UnitType.Plushie);
+            actionFigHighLight.SetActive(selectedUnit == UnitType.ActionFig);
+            robotToyHighLight.SetActive(selectedUnit == UnitType.RobotToy);          
     }
+
+    public void OnHPButtonClicked()
+    {
+        switch (selectedUnit)
+        {
+            case UnitType.Plushie:
+                UpgradeManager.PurchasePlushieHPUpgrade();
+                break;
+            case UnitType.ActionFig:
+                UpgradeManager.PurchaseActionFigHPUpgrade();
+                break;
+            case UnitType.RobotToy:
+                UpgradeManager.PurchaseRobotToyHPUpgrade();
+                break;
+        }
+        RefreshDisplay();
+    }
+
+    public void OnDPSButtonClicked()
+    {
+        switch (selectedUnit)
+        {
+            case UnitType.Plushie:
+                UpgradeManager.PurchasePlushieDPSUpgrade();
+                break;
+            case UnitType.ActionFig:
+                UpgradeManager.PurchaseActionFigDPSUpgrade();
+                break;
+            case UnitType.RobotToy:
+                UpgradeManager.PurchaseRobotToyDPSUpgrade();
+                break;
+        }
+        RefreshDisplay();
+    }
+
+    public void OnAttackSPDButtonClicked()
+    {
+        switch (selectedUnit)
+        {
+            case UnitType.Plushie:
+                UpgradeManager.PurchasePlushieAttackSPDUpgrade();
+                break;
+            case UnitType.ActionFig:
+                UpgradeManager.PurchaseActionFigAttackSPDUpgrade();
+                break;
+            case UnitType.RobotToy:
+                UpgradeManager.PurchaseRobotToyAttackSPDUpgrade();
+                break;
+        }
+        RefreshDisplay();
+    }
+
+    
 
     public void SelectPlushie()
     {

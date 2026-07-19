@@ -535,7 +535,7 @@ MonoBehaviour:
   attackRate: 1
   health: 100
   isPlayerUnit: 1
-  attackRange: 1
+  attackRange: 0.8
 --- !u!114 &3412740433143230557
 MonoBehaviour:
   m_ObjectHideFlags: 0
