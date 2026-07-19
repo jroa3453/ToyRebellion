@@ -30,8 +30,20 @@ public class BaseHealth : MonoBehaviour
         if (healthBar != null)
             healthBar.value = currentHealth;
 
+        if (!isPlayerBase)
+        {
+            Debug.Log("1 Stars added!");
+            UpgradeManager.Stars += 2;
+        }
+
         if (currentHealth <= 0)
             GameOver();
+
+        if ( currentHealth <= 0 && !isPlayerBase)
+        {
+             Debug.Log("2 Stars added!");
+            UpgradeManager.Stars += 4; 
+        }
     }
 
     void GameOver()

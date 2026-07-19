@@ -107,6 +107,17 @@ public class Unit : MonoBehaviour
 
         if (unitHealthBar != null)
             unitHealthBar.SetHealth(health);
+
+        if (!isPlayerUnit)
+        {
+            UpgradeManager.Stars += 1;
+        }
+
+        if(health <= 0 && !isPlayerUnit)
+        {
+            Debug.Log("1 Stars added!");
+            UpgradeManager.Stars +=1;
+        }
         
         if (health <= 0)
             Destroy(gameObject);

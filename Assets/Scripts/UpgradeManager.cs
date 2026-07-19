@@ -80,6 +80,11 @@ public static class UpgradeManager
         float percentPerLevel = 0.1f;
         return 1 + (level * percentPerLevel);
     }
+
+     public static void ResetStarCurrencyStars()
+    {
+        Stars = 0;
+    }
     //Plushie Upgrades
     public static bool PurchasePlushieHPUpgrade()
     {
@@ -238,6 +243,21 @@ public static class UpgradeManager
         {
             return false;
         }
+    }
+    public static void ResetAllUpgrades()
+    {
+        
+        PlushieHPLevel = 0;
+        PlushieDPSLevel = 0;
+        PlushieAttackSPDLevel = 0;
+
+        ActionFigHPLevel = 0;
+        ActionFigDPSLevel = 0;
+        ActionFigAttackSPDLevel = 0;
+
+        RobotToyHPLevel = 0;
+        RobotToyDPSLevel = 0;
+        RobotToyAttackSPDLevel = 0;
     }
     public static bool PurchaseRobotToyAttackSPDUpgrade()
     {

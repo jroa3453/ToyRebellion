@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+
 public class UpgradesManager : MonoBehaviour
 {
     public UnitType selectedUnit = UnitType.Plushie;
@@ -21,6 +22,11 @@ public class UpgradesManager : MonoBehaviour
     public TMP_Text attackSPDLevelText;
     public TMP_Text attackSPDValueText;
     public Slider attackSPDSlider;
+
+    public TMP_Text hpCostText;
+    public TMP_Text dpsCostText;
+    public TMP_Text attackSPDCostText;
+    public TMP_Text starsText;
 
     int hpLevel = 0;
     int dpsLevel = 0;
@@ -57,12 +63,24 @@ public class UpgradesManager : MonoBehaviour
         RefreshDisplay();
     }
     public void AddTestStars()
-{
-    UpgradeManager.Stars += 250;
-    Debug.Log("Stars added! Current Stars: " + UpgradeManager.Stars);
-    RefreshDisplay();
-}
-
+    {
+        UpgradeManager.Stars += 250;
+        Debug.Log("Stars added! Current Stars: " + UpgradeManager.Stars);
+        RefreshDisplay();
+    }
+    public void OnResetButtonClicked()
+    {
+        UpgradeManager.ResetAllUpgrades();
+        
+        RefreshDisplay();
+        Debug.Log("All upgrades reset to level 0.");
+    }
+    public void OnResetCurrencyStarsButtonClicked()
+    {
+        UpgradeManager.ResetStarCurrencyStars();
+        Debug.Log("Currency reset to 0!");
+        RefreshDisplay();
+    }
     public void RefreshDisplay()
     {
         // Update the display for the selected unit type
@@ -95,16 +113,21 @@ public class UpgradesManager : MonoBehaviour
             Unit unitData = selectedPrefab.GetComponent<Unit>();
             float actualHP = unitData.health * UpgradeManager.GetUpgradeMultiplier(hpLevel);
             hpValueText.text = "<color=#FFD700>" + actualHP + "</color> HP";
+            hpCostText.text = UpgradeManager.GetUpgradeCost(hpLevel).ToString();
 
             dpsLevelText.text = "Lv " + dpsLevel;
             dpsSlider.value = (float)dpsLevel / UpgradeManager.MaxUpgradeLevel;
             float actualDPS = unitData.attackDamage * UpgradeManager.GetUpgradeMultiplier(dpsLevel);
             dpsValueText.text = "<color=#FFD700>" + actualDPS + "</color> DPS";
+            dpsCostText.text = UpgradeManager.GetUpgradeCost(dpsLevel).ToString();
 
             attackSPDLevelText.text = "Lv " + attackSPDLevel;
             attackSPDSlider.value = (float)attackSPDLevel / UpgradeManager.MaxUpgradeLevel;
             float actualAttackSPD = unitData.attackRate * UpgradeManager.GetUpgradeMultiplier(attackSPDLevel);
-            attackSPDValueText.text = "<color=#FFD700>" + actualAttackSPD + "</color> SPD";
+            attackSPDValueText.text = "<color=#FFD700>" + actualAttackSPD + "</color> ATTSPD";
+            attackSPDCostText.text = UpgradeManager.GetUpgradeCost(attackSPDLevel).ToString();
+            //Stars currency
+            starsText.text = UpgradeManager.Stars.ToString();
     }
 
     public void SelectPlushie()
