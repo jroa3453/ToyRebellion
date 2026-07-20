@@ -18,13 +18,18 @@ public class Unit : MonoBehaviour
     private BaseHealth currentBase;
 
     private UnitHealthBar unitHealthBar;
+    private UnitAnimationController unitAnimation;
+    private SpriteRenderer spriteRenderer;
 
     public void Init(bool isPlayer)
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.flipX = !isPlayer;
         isPlayerUnit = isPlayer;
         initialized = true;
 
-        unitHealthBar = GetComponent<UnitHealthBar>(); 
+        unitHealthBar = GetComponent<UnitHealthBar>();
+        unitAnimation = GetComponent<UnitAnimationController>(); 
         if (unitHealthBar != null)
         {
             unitHealthBar.SetMaxHealth(health);
@@ -43,6 +48,11 @@ public class Unit : MonoBehaviour
             // Fight enemy unit
             if (attackCooldown <= 0)
             {
+                if (unitAnimation != null)
+                {
+                    unitAnimation.PlayAttack();
+                }
+
                 currentTarget.TakeDamage(attackDamage);
                 attackCooldown = 1f / attackRate;
             }
@@ -52,8 +62,14 @@ public class Unit : MonoBehaviour
             // Attack base
             if (attackCooldown <= 0)
             {
+                if (unitAnimation != null)
+                {
+                    unitAnimation.PlayAttack();
+                }
+
                 currentBase.TakeDamage(attackDamage);
                 attackCooldown = 1f / attackRate;
+
                 Debug.Log("Attacking base!");
             }
         }

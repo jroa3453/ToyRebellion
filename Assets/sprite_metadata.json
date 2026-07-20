@@ -1,0 +1,23 @@
+{
+  "frame_size": [
+    256,
+    256
+  ],
+  "frames": 6,
+  "pivot": "bottom-center",
+  "facing": "right",
+  "damage_frames": {
+    "action_figure": [
+      2,
+      3
+    ],
+    "robot_toy": [
+      3,
+      4
+    ],
+    "plushie": [
+      3,
+      4
+    ]
+  }
+}
