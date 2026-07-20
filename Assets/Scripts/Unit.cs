@@ -18,6 +18,7 @@ public class Unit : MonoBehaviour
     private BaseHealth currentBase;
 
     private UnitHealthBar unitHealthBar;
+    private UnitAnimationController unitAnimation;
 
     public void Init(bool isPlayer)
     {
@@ -25,6 +26,7 @@ public class Unit : MonoBehaviour
         initialized = true;
 
         unitHealthBar = GetComponent<UnitHealthBar>(); 
+        unitAnimation = GetComponent<UnitAnimationController>();
         if (unitHealthBar != null)
         {
             unitHealthBar.SetMaxHealth(health);
@@ -43,6 +45,10 @@ public class Unit : MonoBehaviour
             // Fight enemy unit
             if (attackCooldown <= 0)
             {
+                if(unitAnimation != null)
+                {
+                     unitAnimation.Attack();
+                }
                 currentTarget.TakeDamage(attackDamage);
                 attackCooldown = 1f / attackRate;
             }
@@ -52,8 +58,16 @@ public class Unit : MonoBehaviour
             // Attack base
             if (attackCooldown <= 0)
             {
+                Debug.Log("Unit reached base attack block");
+
+                if(unitAnimation != null)
+                {
+                     unitAnimation.Attack();
+                }
+
                 currentBase.TakeDamage(attackDamage);
                 attackCooldown = 1f / attackRate;
+                
                 Debug.Log("Attacking base!");
             }
         }
