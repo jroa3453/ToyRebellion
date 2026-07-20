@@ -817,8 +817,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: addaa706f67544e448852c5d650e13cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BaseHealth
-  maxHealth: 50
-  currentHealth: 50
+  maxHealth: 500
+  currentHealth: 500
   isPlayerBase: 0
   healthBar: {fileID: 137513258}
 --- !u!4 &382600413
@@ -885,7 +885,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -9151466676787084998, guid: 17d04d266cc690747bf19f2738ca6d5f, type: 3}
   m_Color: {r: 0.5377358, g: 0.058339275, b: 0.058339275, a: 1}

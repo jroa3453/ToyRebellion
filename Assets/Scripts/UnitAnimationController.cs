@@ -4,7 +4,8 @@ public class UnitAnimationController : MonoBehaviour
 {
     private Animator animator;
 
-    private void Awake()
+    public void Awake()
+
     {
         animator = GetComponent<Animator>();
         if(animator == null)
@@ -12,6 +13,7 @@ public class UnitAnimationController : MonoBehaviour
             Debug.LogError("Animator component is missing.");
         }
     }
+
 
     public void PlayAttack()
     {
@@ -23,3 +25,6 @@ public class UnitAnimationController : MonoBehaviour
         animator.SetTrigger("Attack");
     }
 }
+
+
+

@@ -19,7 +19,10 @@ public class Unit : MonoBehaviour
 
     private UnitHealthBar unitHealthBar;
     private UnitAnimationController unitAnimation;
+
     private SpriteRenderer spriteRenderer;
+
+
 
     public void Init(bool isPlayer)
     {
@@ -28,8 +31,13 @@ public class Unit : MonoBehaviour
         isPlayerUnit = isPlayer;
         initialized = true;
 
+
         unitHealthBar = GetComponent<UnitHealthBar>();
         unitAnimation = GetComponent<UnitAnimationController>(); 
+
+        unitHealthBar = GetComponent<UnitHealthBar>(); 
+        unitAnimation = GetComponent<UnitAnimationController>();
+ 
         if (unitHealthBar != null)
         {
             unitHealthBar.SetMaxHealth(health);
@@ -48,9 +56,16 @@ public class Unit : MonoBehaviour
             // Fight enemy unit
             if (attackCooldown <= 0)
             {
+
                 if (unitAnimation != null)
                 {
                     unitAnimation.PlayAttack();
+                }
+
+
+                if(unitAnimation != null)
+                {
+                     unitAnimation.PlayAttack();
                 }
 
                 currentTarget.TakeDamage(attackDamage);
@@ -62,9 +77,17 @@ public class Unit : MonoBehaviour
             // Attack base
             if (attackCooldown <= 0)
             {
+
                 if (unitAnimation != null)
                 {
                     unitAnimation.PlayAttack();
+
+                Debug.Log("Unit reached base attack block");
+
+                if(unitAnimation != null)
+                {
+                     unitAnimation.PlayAttack();
+
                 }
 
                 currentBase.TakeDamage(attackDamage);
@@ -115,6 +138,7 @@ public class Unit : MonoBehaviour
             return baseObj.GetComponent<BaseHealth>();
 
         return null;
+    }
     }
 
     public void TakeDamage(float amount)
