@@ -486,9 +486,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0819ed077f4b5a14e8dcd2dfa15cf993, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Unit
-  moveSpeed: 0.8
+  moveSpeed: 0.5
   attackDamage: 10
-  attackRate: 1
+  attackRate: 2
   health: 100
   isPlayerUnit: 0
   attackRange: 0.8
@@ -509,7 +509,7 @@ BoxCollider2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_LayerOverridePriority: 0
+  m_LayerOverridePriority: 2
   m_ForceSendLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -575,7 +575,7 @@ Animator:
   m_GameObject: {fileID: 6706633192752317873}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b1f9f2ff3a2629140a3de5ce8e14a9fa, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5e269f0918cb18442834a17a8306b2e2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
