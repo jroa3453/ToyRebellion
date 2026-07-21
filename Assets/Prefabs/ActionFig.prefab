@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 4069648244245997707}
   - component: {fileID: 5085074463322957386}
   - component: {fileID: -7103448389325465532}
+  - component: {fileID: -1366736767019974260}
   m_Layer: 0
   m_Name: ActionFig
   m_TagString: Untagged
@@ -143,16 +144,16 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.82, y: 2.01}
-    newSize: {x: 1, y: 1}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 2.56, y: 2.56}
+    newSize: {x: 1.82, y: 2.01}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -206,14 +207,14 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 5
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 3446390076479175788, guid: 39ebb74aba8f3d442a8955d27c22190f, type: 3}
+  m_Sprite: {fileID: 1422900850528749338, guid: 6c259ff50ad88bb43ba33f74fe0f5450, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.82, y: 2.01}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -235,7 +236,12 @@ MonoBehaviour:
   attackRate: 1
   health: 100
   isPlayerUnit: 1
-  attackRange: 0.8
+  attackRange: 1.2
+  laneBottomOffset: -0.5
+  laneTopOffset: 0
+  verticalSpeed: 1
+  avoidanceDistance: 0.5
+  avoidanceRadius: 0.25
 --- !u!114 &4069648244245997707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,6 +291,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 435db3a164d1aa547b559c51b3a09f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitAnimationController
+--- !u!50 &-1366736767019974260
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4022300306252798955}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!1 &5443623006484449207
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +554,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.25, y: 1.24}
+  m_AnchoredPosition: {x: 0.25, y: 2.424}
   m_SizeDelta: {x: 100, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7720260794882632589

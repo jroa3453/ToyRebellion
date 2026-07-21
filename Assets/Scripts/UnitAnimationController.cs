@@ -4,13 +4,13 @@ public class UnitAnimationController : MonoBehaviour
 {
     private Animator animator;
 
-    public void Awake()
-
+    private void Awake()
     {
         animator = GetComponent<Animator>();
-        if(animator == null)
+
+        if (animator != null)
         {
-            Debug.LogError("Animator component is missing.");
+            animator.ResetTrigger("Attack");
         }
     }
 

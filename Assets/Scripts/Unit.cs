@@ -12,149 +12,313 @@ public class Unit : MonoBehaviour
     [Header("Detection")]
     public float attackRange = 1f;
 
+    [Header("Crowd Movement")]
+    [Tooltip("How far below the normal ground line units may move.")]
+    [SerializeField] private float laneBottomOffset = -0.5f;
+
+    [Tooltip("Keep this at 0 so units never move above their starting Y.")]
+    [SerializeField] private float laneTopOffset = 0f;
+
+    [SerializeField] private float verticalSpeed = 0.75f;
+    [SerializeField] private float avoidanceDistance = 0.45f;
+    [SerializeField] private float avoidanceRadius = 0.2f;
+
     private float attackCooldown;
-    private bool initialized = false;
+    private bool initialized;
+    private bool wantsToMove;
+
     private Unit currentTarget;
     private BaseHealth currentBase;
 
     private UnitHealthBar unitHealthBar;
     private UnitAnimationController unitAnimation;
-
     private SpriteRenderer spriteRenderer;
-    private float laneY;
+    private Rigidbody2D rb;
 
+    private float originalLaneY;
+    private float preferredY;
 
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        unitHealthBar = GetComponent<UnitHealthBar>();
+        unitAnimation = GetComponent<UnitAnimationController>();
+    }
 
     public void Init(bool isPlayer)
     {
         Debug.Log("Unit initialized. Player unit: " + isPlayer);
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.flipX = !isPlayer;
+
         isPlayerUnit = isPlayer;
         initialized = true;
 
-        unitHealthBar = GetComponent<UnitHealthBar>(); 
-        unitAnimation = GetComponent<UnitAnimationController>();
- 
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.flipX = !isPlayer;
+        }
+
         if (unitHealthBar != null)
         {
             unitHealthBar.SetMaxHealth(health);
         }
-        laneY = transform.position.y;
+
+        originalLaneY = transform.position.y;
+
+        // Every unit chooses a position at or below the original ground line.
+       preferredY = originalLaneY;
     }
 
-    void Update()
+    private void Update()
     {
-        
-        if (!initialized) return;
-        
+        if (!initialized)
+        {
+            return;
+        }
+
+        if (attackCooldown > 0f)
+        {
+            attackCooldown -= Time.deltaTime;
+        }
 
         currentTarget = FindNearestEnemy();
         currentBase = FindNearestBase();
 
+        wantsToMove = false;
+
         if (currentTarget != null)
         {
-            // Fight enemy unit
-            if (attackCooldown <= 0)
+            float distanceToTarget = Vector2.Distance(
+                transform.position,
+                currentTarget.transform.position
+            );
+
+            if (distanceToTarget <= attackRange)
             {
-
-                if (unitAnimation != null)
-                {
-                    unitAnimation.PlayAttack();
-                }
-
-                currentTarget.TakeDamage(attackDamage);
-                attackCooldown = 1f / attackRate;
+                StopMoving();
+                AttackUnit();
+            }
+            else
+            {
+                wantsToMove = true;
             }
         }
         else if (currentBase != null)
-{
-    // Attack base
-    if (attackCooldown <= 0)
+        {
+            float distanceToBase = Vector2.Distance(
+                transform.position,
+                currentBase.transform.position
+            );
+
+            if (distanceToBase <= attackRange * 1.2f)
+            {
+                StopMoving();
+                AttackBase();
+            }
+            else
+            {
+                wantsToMove = true;
+            }
+        }
+        else
+        {
+            wantsToMove = true;
+        }
+    }
+
+    private void FixedUpdate()
     {
+        if (!initialized || rb == null)
+        {
+            return;
+        }
+
+        if (wantsToMove)
+        {
+            MoveForward();
+        }
+        else
+        {
+            StopMoving();
+        }
+    }
+
+    private void MoveForward()
+    {
+        float forwardDirection = isPlayerUnit ? 1f : -1f;
+
+        float minimumY = originalLaneY + laneBottomOffset;
+        float maximumY = originalLaneY + laneTopOffset;
+
+        float targetY = Mathf.Clamp(
+            preferredY,
+            minimumY,
+            maximumY
+        );
+
+        // Check for a friendly unit immediately ahead.
+        Vector2 checkPosition = rb.position + new Vector2(
+            forwardDirection * avoidanceDistance,
+            0f
+        );
+
+        Collider2D[] nearbyColliders = Physics2D.OverlapCircleAll(
+            checkPosition,
+            avoidanceRadius
+        );
+
+        foreach (Collider2D nearbyCollider in nearbyColliders)
+        {
+            Unit nearbyUnit = nearbyCollider.GetComponent<Unit>();
+
+            if (nearbyUnit == null || nearbyUnit == this)
+            {
+                continue;
+            }
+
+            if (nearbyUnit.isPlayerUnit == isPlayerUnit)
+            {
+                preferredY = minimumY;
+                targetY = preferredY;
+                break;
+            }
+        }
+
+        float verticalVelocity = 0f;
+        float verticalDifference = targetY - rb.position.y;
+
+        if (Mathf.Abs(verticalDifference) > 0.03f)
+        {
+            verticalVelocity =
+                Mathf.Sign(verticalDifference) * verticalSpeed;
+        }
+
+        rb.linearVelocity = new Vector2(
+            forwardDirection * moveSpeed,
+            verticalVelocity
+        );
+
+        // Prevent the unit from ever moving above its original Y.
+        Vector2 clampedPosition = rb.position;
+
+        clampedPosition.y = Mathf.Clamp(
+            clampedPosition.y,
+            minimumY,
+            maximumY
+        );
+
+        rb.position = clampedPosition;
+    }
+
+    private void StopMoving()
+    {
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+    }
+
+    private void AttackUnit()
+    {
+        if (attackCooldown > 0f || currentTarget == null)
+        {
+            return;
+        }
+
         if (unitAnimation != null)
         {
             unitAnimation.PlayAttack();
         }
 
-        Debug.Log("Unit reached base attack block");
+        currentTarget.TakeDamage(attackDamage);
+        attackCooldown = 1f / attackRate;
+    }
+
+    private void AttackBase()
+    {
+        if (attackCooldown > 0f || currentBase == null)
+        {
+            return;
+        }
+
+        if (unitAnimation != null)
+        {
+            unitAnimation.PlayAttack();
+        }
 
         currentBase.TakeDamage(attackDamage);
         attackCooldown = 1f / attackRate;
-
-        Debug.Log("Attacking base!");
     }
-}
-        else
-        {
-            // Move forward
-            float direction = isPlayerUnit ? 1f : -1f;
-            transform.position += new Vector3(direction * moveSpeed * Time.deltaTime, 0, 0);
-        }
 
-        if (attackCooldown > 0)
-            attackCooldown -= Time.deltaTime;
-            transform.position = new Vector3(
-            transform.position.x,
-            laneY,
-            transform.position.z
-        );
-    }
-    Unit FindNearestEnemy()
+    private Unit FindNearestEnemy()
     {
-        string enemyTag = isPlayerUnit ? "EnemyUnit" : "PlayerUnit";
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag(enemyTag);
+        string enemyTag =
+            isPlayerUnit ? "EnemyUnit" : "PlayerUnit";
 
-        float closestDist = attackRange;
-        Unit closest = null;
+        GameObject[] enemies =
+            GameObject.FindGameObjectsWithTag(enemyTag);
+
+        float closestDistance = Mathf.Infinity;
+        Unit closestEnemy = null;
 
         foreach (GameObject enemy in enemies)
         {
-            float dist = Vector2.Distance(transform.position, enemy.transform.position);
-            if (dist < closestDist)
+            Unit enemyUnit = enemy.GetComponent<Unit>();
+
+            if (enemyUnit == null)
             {
-                closestDist = dist;
-                closest = enemy.GetComponent<Unit>();
+                continue;
+            }
+
+            float distance = Vector2.Distance(
+                transform.position,
+                enemy.transform.position
+            );
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestEnemy = enemyUnit;
             }
         }
-        return closest;
+
+        return closestEnemy;
     }
 
-    BaseHealth FindNearestBase()
+    private BaseHealth FindNearestBase()
     {
-        string baseTag = isPlayerUnit ? "EnemyBase" : "PlayerBase";
-        GameObject baseObj = GameObject.FindGameObjectWithTag(baseTag);
+        string baseTag =
+            isPlayerUnit ? "EnemyBase" : "PlayerBase";
 
-        if (baseObj == null) return null;
+        GameObject baseObject =
+            GameObject.FindGameObjectWithTag(baseTag);
 
-        float dist = Vector2.Distance(transform.position, baseObj.transform.position);
-        if (dist < attackRange * 1.2f)
-            return baseObj.GetComponent<BaseHealth>();
+        if (baseObject == null)
+        {
+            return null;
+        }
 
-        return null;
-        
+        return baseObject.GetComponent<BaseHealth>();
     }
-    
 
     public void TakeDamage(float amount)
     {
         health -= amount;
 
         if (unitHealthBar != null)
+        {
             unitHealthBar.SetHealth(health);
+        }
 
+        // Give one star every time an enemy unit is hit.
         if (!isPlayerUnit)
         {
             UpgradeManager.Stars += 1;
         }
 
-        if(health <= 0 && !isPlayerUnit)
+        if (health <= 0f)
         {
-            Debug.Log("1 Stars added!");
-            UpgradeManager.Stars +=1;
-        }
-        
-        if (health <= 0)
             Destroy(gameObject);
+        }
     }
 }
