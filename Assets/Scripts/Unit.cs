@@ -21,19 +21,17 @@ public class Unit : MonoBehaviour
     private UnitAnimationController unitAnimation;
 
     private SpriteRenderer spriteRenderer;
+    private float laneY;
 
 
 
     public void Init(bool isPlayer)
     {
+        Debug.Log("Unit initialized. Player unit: " + isPlayer);
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.flipX = !isPlayer;
         isPlayerUnit = isPlayer;
         initialized = true;
-
-
-        unitHealthBar = GetComponent<UnitHealthBar>();
-        unitAnimation = GetComponent<UnitAnimationController>(); 
 
         unitHealthBar = GetComponent<UnitHealthBar>(); 
         unitAnimation = GetComponent<UnitAnimationController>();
@@ -42,11 +40,14 @@ public class Unit : MonoBehaviour
         {
             unitHealthBar.SetMaxHealth(health);
         }
+        laneY = transform.position.y;
     }
 
     void Update()
     {
+        
         if (!initialized) return;
+        
 
         currentTarget = FindNearestEnemy();
         currentBase = FindNearestBase();
@@ -62,40 +63,28 @@ public class Unit : MonoBehaviour
                     unitAnimation.PlayAttack();
                 }
 
-
-                if(unitAnimation != null)
-                {
-                     unitAnimation.PlayAttack();
-                }
-
                 currentTarget.TakeDamage(attackDamage);
                 attackCooldown = 1f / attackRate;
             }
         }
         else if (currentBase != null)
+{
+    // Attack base
+    if (attackCooldown <= 0)
+    {
+        if (unitAnimation != null)
         {
-            // Attack base
-            if (attackCooldown <= 0)
-            {
-
-                if (unitAnimation != null)
-                {
-                    unitAnimation.PlayAttack();
-
-                Debug.Log("Unit reached base attack block");
-
-                if(unitAnimation != null)
-                {
-                     unitAnimation.PlayAttack();
-
-                }
-
-                currentBase.TakeDamage(attackDamage);
-                attackCooldown = 1f / attackRate;
-
-                Debug.Log("Attacking base!");
-            }
+            unitAnimation.PlayAttack();
         }
+
+        Debug.Log("Unit reached base attack block");
+
+        currentBase.TakeDamage(attackDamage);
+        attackCooldown = 1f / attackRate;
+
+        Debug.Log("Attacking base!");
+    }
+}
         else
         {
             // Move forward
@@ -105,6 +94,11 @@ public class Unit : MonoBehaviour
 
         if (attackCooldown > 0)
             attackCooldown -= Time.deltaTime;
+            transform.position = new Vector3(
+            transform.position.x,
+            laneY,
+            transform.position.z
+        );
     }
     Unit FindNearestEnemy()
     {
@@ -138,8 +132,9 @@ public class Unit : MonoBehaviour
             return baseObj.GetComponent<BaseHealth>();
 
         return null;
+        
     }
-    }
+    
 
     public void TakeDamage(float amount)
     {
