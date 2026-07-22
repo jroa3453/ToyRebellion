@@ -19,6 +19,7 @@ public class MainMenuManager : MonoBehaviour
     public Button settingsButton;
     public Button achievementsButton;
     public Button Quit;
+    public GameObject quitConfirmPanel;
     
     [Header("Scene Names")]
     public string defaultScene = "Bedroom"; // fallback if no level saved yet
@@ -67,6 +68,16 @@ public class MainMenuManager : MonoBehaviour
     {
         Debug.Log($"{buttonName} — coming soon!");
         // Swap in a popup or toast here later
+    }
+
+    public void OnQuitButtonClicked()
+    {
+        quitConfirmPanel.SetActive(true);
+    }
+
+    public void OnCancelQuitButtonClicked()
+    {
+        quitConfirmPanel.SetActive(false);
     }
 
     public void OnQuit()
