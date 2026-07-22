@@ -9,6 +9,9 @@ public class MainMenuManager : MonoBehaviour
     public TextMeshProUGUI batteriesText;
     public TextMeshProUGUI starsText;
 
+    [Header("Player Status")]
+    public TextMeshProUGUI levelText;
+
     [Header("Grid Buttons")]
     public Button playButton;
     public Button levelsButton;
@@ -43,7 +46,10 @@ public class MainMenuManager : MonoBehaviour
             batteriesText.text = PlayerPrefs.GetInt("Batteries", 0).ToString();
 
         if (starsText != null)
-            starsText.text = PlayerPrefs.GetInt("Stars", 0).ToString();
+            starsText.text = UpgradeManager.Stars.ToString();
+        
+        if (levelText != null)
+            levelText.text = "Level " + LevelProgress.HighestUnlocked.ToString();
     }
 
     public void OnPlay()
