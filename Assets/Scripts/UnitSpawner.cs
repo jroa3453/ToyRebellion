@@ -27,6 +27,7 @@ public class UnitSpawner : MonoBehaviour
     public float plushieCost = 10f;
     public float actionFigCost = 25f;
     public float robotToyCost = 40f;
+    public string levelDisplayName;
 
 
     void Update()
@@ -55,7 +56,7 @@ public class UnitSpawner : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         waveClearedText.gameObject.SetActive(true);
-        waveClearedText.text = "Level 1";
+        waveClearedText.text = levelDisplayName;
         yield return new WaitForSeconds(4f);
         waveClearedText.gameObject.SetActive(false);
         yield return StartCoroutine(SpawnEnemy());
