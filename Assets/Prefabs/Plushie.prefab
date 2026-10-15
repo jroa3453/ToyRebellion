@@ -538,7 +538,7 @@ MonoBehaviour:
   attackRate: 1
   health: 100
   isPlayerUnit: 1
-  attackRange: 0.8
+  attackRange: 0.85
   laneBottomOffset: -0.5
   laneTopOffset: 0
   verticalSpeed: 1

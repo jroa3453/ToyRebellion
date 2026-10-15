@@ -151,6 +151,10 @@ public class UnitSpawner : MonoBehaviour
 
         GameObject unit = Instantiate(prefab, position, Quaternion.identity);
 
+        if (!isPlayer)
+        BatteryManager.Instance.StartRegen();
+
+        
         // Set tag on root AND all children
         string tag = isPlayer ? "PlayerUnit" : "EnemyUnit";
         unit.tag = tag;

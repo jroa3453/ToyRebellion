@@ -64,9 +64,7 @@ public class Unit : MonoBehaviour
         }
 
         originalLaneY = transform.position.y;
-
-        // Every unit chooses a position at or below the original ground line.
-       preferredY = originalLaneY;
+        preferredY = originalLaneY;
     }
 
     private void Update()
@@ -84,46 +82,58 @@ public class Unit : MonoBehaviour
         currentTarget = FindNearestEnemy();
         currentBase = FindNearestBase();
 
-        wantsToMove = false;
-
+        float distanceToUnit = Mathf.Infinity;
         if (currentTarget != null)
         {
-            float distanceToTarget = Vector2.Distance(
+            distanceToUnit = Vector2.Distance(
                 transform.position,
                 currentTarget.transform.position
             );
-
-            if (distanceToTarget <= attackRange)
-            {
-                StopMoving();
-                AttackUnit();
-            }
-            else
-            {
-                wantsToMove = true;
-            }
         }
-        else if (currentBase != null)
-        {
-            float distanceToBase = Vector2.Distance(
-                transform.position,
-                currentBase.transform.position
-            );
 
-            if (distanceToBase <= attackRange * 1.2f)
-            {
-                StopMoving();
-                AttackBase();
-            }
-            else
-            {
-                wantsToMove = true;
-            }
+        float distanceToBase = Mathf.Infinity;
+        if (currentBase != null)
+        {
+            distanceToBase = GetDistanceToBase();
+        }
+
+        wantsToMove = false;
+
+        if (distanceToUnit <= attackRange)
+        {
+            // An enemy unit is in range: fight it first.
+            StopMoving();
+            AttackUnit();
+        }
+        else if (distanceToBase <= attackRange)
+        {
+            // No unit in range but the base is: attack the base.
+            StopMoving();
+            AttackBase();
         }
         else
         {
+            // Nothing in range: keep walking.
             wantsToMove = true;
         }
+    }
+
+    // Distance to the nearest edge of the base (falls back to its center
+    // if the base has no collider).
+    private float GetDistanceToBase()
+    {
+        Collider2D baseCollider = currentBase.GetComponent<Collider2D>();
+
+        if (baseCollider != null)
+        {
+            Vector2 closestPoint = baseCollider.ClosestPoint(transform.position);
+            return Vector2.Distance(transform.position, closestPoint);
+        }
+
+        return Vector2.Distance(
+            transform.position,
+            currentBase.transform.position
+        );
     }
 
     private void FixedUpdate()

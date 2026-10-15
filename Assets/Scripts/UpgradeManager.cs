@@ -65,6 +65,17 @@ public static class UpgradeManager
         get => PlayerPrefs.GetInt("Stars", 0);
         set => PlayerPrefs.SetInt("Stars", value);
     }
+
+    public static bool ActionFigUnlocked
+    {
+        get => PlayerPrefs.GetInt("ActionFigUnlocked", 0) == 1;
+        set => PlayerPrefs.SetInt("ActionFigUnlocked", value ? 1 : 0);
+    }
+    public static bool RobotToyUnlocked
+    {
+        get => PlayerPrefs.GetInt("RobotToyUnlocked", 0) == 1;
+        set => PlayerPrefs.SetInt("RobotToyUnlocked", value ? 1 : 0);
+    }
     public const int MaxUpgradeLevel = 20;
     
     //Upgrade Costs
@@ -167,6 +178,45 @@ public static class UpgradeManager
             return false;
         }
     }
+
+    public static bool PurchaseActionFigUnlock()
+    {
+        if (ActionFigUnlocked)
+        {
+            return true; // already unlocked, nothing to buy
+        }
+
+        int cost = 100;
+        if (Stars >= cost)
+        {
+            Stars -= cost;
+            ActionFigUnlocked = true;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public static bool PurchaseRobotToyUnlock()
+    {
+        if (RobotToyUnlocked)
+        {
+            return true; // already unlocked, nothing to buy
+        }
+
+        int cost = 300;
+        if (Stars >= cost)
+        {
+            Stars -= cost;
+            RobotToyUnlocked = true;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     public static bool PurchaseActionFigDPSUpgrade()
     {
         if(ActionFigDPSLevel >= MaxUpgradeLevel)
@@ -246,7 +296,6 @@ public static class UpgradeManager
     }
     public static void ResetAllUpgrades()
     {
-        
         PlushieHPLevel = 0;
         PlushieDPSLevel = 0;
         PlushieAttackSPDLevel = 0;
@@ -258,6 +307,9 @@ public static class UpgradeManager
         RobotToyHPLevel = 0;
         RobotToyDPSLevel = 0;
         RobotToyAttackSPDLevel = 0;
+
+        ActionFigUnlocked = false;
+        RobotToyUnlocked = false;
     }
     public static bool PurchaseRobotToyAttackSPDUpgrade()
     {
